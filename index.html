@@ -3,16 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OS.ZERO</title>
+  <title>OS ZERO</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    .tv-static {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      background: url('https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif') center center / cover no-repeat;
+      opacity: 0.02;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .scanline {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.015),
+        rgba(255, 255, 255, 0.015) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .iphone-notification {
+      width: 320px;
+      max-width: 90%;
+      background-color: white;
+      color: black;
+      border-radius: 20px;
+      padding: 14px 18px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+    }
+    .red-dot {
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+  </style>
 </head>
 <body class="bg-black text-white font-sans">
+  <!-- Static Background Effect -->
+  <div class="tv-static"></div>
+  <div class="scanline"></div>
+
   <!-- Navigation -->
-  <nav class="fixed top-0 w-full z-10 backdrop-blur bg-white/100 border-b border-gray-300">
+  <nav class="fixed top-0 w-full z-50 bg-white border-b border-gray-300">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <span class="text-black text-xl font-bold tracking-wide">OS.ZERO</OS.ZERO></span>
+      <span class="text-black text-xl font-bold tracking-wide">OS ZERO</span>
       <div class="space-x-6 text-sm text-black">
+        <button id="toggle-sound" class="text-xs bg-black text-white px-3 py-1 rounded-full hover:bg-gray-800 transition">🔊 Sound On</button>
+        <button id="toggle-sound" class="text-xs bg-black text-white px-3 py-1 rounded-full hover:bg-gray-800 transition">🔊 Sound On</button>
         <a href="#" class="hover:opacity-70 transition">Philosophy</a>
         <a href="#" class="hover:opacity-70 transition">Principles</a>
         <a href="#" class="hover:opacity-70 transition">Join</a>
@@ -22,10 +82,24 @@
 
   <!-- Hero -->
   <section class="relative h-screen w-full" id="hero">
-    <img src="https://images.unsplash.com/photo-1603052875686-bfc9fa0f6c1f?auto=format&fit=crop&w=1400&q=80" alt="Freedom moment" class="absolute inset-0 w-full h-full object-cover z-0" />
-    <div class="absolute inset-0 bg-black/60 z-0"></div>
+    <div class="absolute inset-0 bg-black z-0"></div>
+
+    <!-- Notification Bubble -->
+    <div id="notification" class="absolute top-[20%] left-1/2 transform -translate-x-1/2 iphone-notification z-20">
+      <div class="red-dot"></div>
+      <span>End the dopamine takeover</span>
+      <button id="snooze-btn" class="ml-auto text-sm text-blue-600 hover:underline">Snooze</button>
+    </div>
+      <span>End the dopamine takeover</span>
+      <button id="snooze-btn" class="ml-auto text-sm text-blue-600 hover:underline">Snooze</button>
+    </div>
+      <span>End the dopamine takeover</span>
+    </div>
+
     <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
-      <h1 class="text-5xl md:text-7xl font-semibold tracking-tight leading-tight mb-4">Nothing Fancy, <br>Nothing Flashy. <br>Just ZERO.</h1>
+      <h1 class="text-5xl md:text-7xl font-semibold tracking-tight leading-tight mb-4">
+        Nothing Fancy.<br>Nothing Flashy.<br>Just ZERO.
+      </h1>
       <p class="text-lg md:text-xl text-gray-300 max-w-xl mb-8">
         OS ZERO is a focused operating system for those who want to live and create with clarity.
       </p>
@@ -33,16 +107,62 @@
         Read the Manifesto
       </a>
     </div>
-    <footer class="absolute bottom-4 w-full text-center text-xs text-gray-400">
-      &copy; 2025 PROJECT ZERO
+
+    <footer class="absolute bottom-4 w-full text-center text-xs text-gray-400 z-10">
+      © 2025 PROJECT ZERO
     </footer>
   </section>
 
+  <!-- Notification Sound -->
+  <audio id="notif-sound" preload="auto">
+    <source src="https://notificationsounds.com/storage/sounds/file-sounds-1157-pristine.mp3" type="audio/mpeg">
+  </audio>
+
   <!-- GSAP Animations -->
   <script>
+    const soundToggle = document.getElementById("toggle-sound");
+    let soundEnabled = true;
+    soundToggle.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      soundToggle.textContent = soundEnabled ? "🔊 Sound On" : "🔇 Sound Off";
+    });
+
+    const snoozeBtn = document.getElementById("snooze-btn");
+    snoozeBtn.addEventListener("click", () => {
+      const note = document.getElementById("notification");
+      note.style.display = "none";
+    });
+
     gsap.from("#hero h1", { opacity: 0, y: 20, duration: 1 });
     gsap.from("#hero p", { opacity: 0, y: 20, duration: 1, delay: 0.2 });
     gsap.from("#hero a", { opacity: 0, y: 20, duration: 1, delay: 0.4 });
+
+    // Show notification and shake occasionally
+    setTimeout(() => {
+      const note = document.getElementById("notification");
+      const sound = document.getElementById("notif-sound");
+
+      gsap.to(note, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "bounce.out"
+      });
+
+      if (soundEnabled) {
+        sound.play().catch((e) => {
+          console.warn("Sound blocked until user interaction.", e);
+        });
+      }
+
+      // Shake around center every 10s
+      setInterval(() => {
+        gsap.fromTo(note, 
+          { x: -3, y: -3 }, 
+          { x: 3, y: 3, duration: 0.1, yoyo: true, repeat: 5, ease: "power1.inOut" }
+        );
+      }, 10000);
+    }, 6000);
   </script>
 </body>
 </html>
