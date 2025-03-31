@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OS ZERO</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body class="bg-black text-white font-sans">
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 backdrop-blur bg-black/50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <span class="text-white text-xl font-bold tracking-wide">OS ZERO</span>
+      <div class="space-x-6 text-sm text-gray-400">
+        <a href="#philosophy" class="hover:text-white transition">Philosophy</a>
+        <a href="#principles" class="hover:text-white transition">Principles</a>
+        <a href="#cta" class="hover:text-white transition">Join</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="flex flex-col justify-center items-center text-center h-screen px-6 pt-24" id="hero">
+    <h1 class="text-6xl md:text-8xl font-extrabold tracking-tight text-white">OS ZERO</h1>
+    <p class="mt-6 text-lg md:text-xl max-w-2xl text-gray-400">
+      Reclaim your mind. A focused OS for a distracted world.
+    </p>
+    <a
+      href="#philosophy"
+      class="mt-8 inline-block px-6 py-3 border border-green-400 text-green-400 rounded-lg hover:bg-green-400 hover:text-black transition"
+    >
+      Read the Manifesto
+    </a>
+  </section>
+
+  <!-- About -->
+  <section id="philosophy" class="px-6 md:px-20 py-24 border-t border-gray-800">
+    <h2 class="text-4xl font-bold text-white mb-6">What is OS ZERO?</h2>
+    <p class="text-gray-400 max-w-3xl text-lg">
+      OS ZERO is more than an operating system. It’s a design philosophy—built for signal, not noise.
+      No infinite scroll. No push distractions. It’s minimal by intention, not trend.
+    </p>
+  </section>
+
+  <!-- Principles -->
+  <section id="principles" class="px-6 md:px-20 py-24 border-t border-gray-800">
+    <h2 class="text-4xl font-bold text-white mb-6">Core Principles</h2>
+    <ul class="space-y-4 text-lg text-gray-400">
+      <li>• Function over flash</li>
+      <li>• Clarity over convenience</li>
+      <li>• Depth over dopamine</li>
+      <li>• Local-first, open-source by default</li>
+      <li>• You control it — not the other way around</li>
+    </ul>
+  </section>
+
+  <!-- Quote -->
+  <section class="px-6 md:px-20 py-24 border-t border-gray-800 text-center">
+    <blockquote class="text-2xl italic text-gray-500 max-w-3xl mx-auto">
+      "This is not nostalgia. This is minimalism with purpose."
+    </blockquote>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" class="px-6 md:px-20 py-24 border-t border-gray-800 text-center">
+    <h2 class="text-3xl font-bold text-white mb-4">Join the Movement</h2>
+    <p class="text-gray-400 max-w-xl mx-auto mb-6">
+      Help shape a new generation of focused tools and intentional tech.
+    </p>
+    <a
+      href="#"
+      class="bg-green-400 hover:bg-green-300 text-black font-semibold py-3 px-6 rounded-lg transition"
+    >
+      Get Involved
+    </a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 text-sm text-gray-600 border-t border-gray-800">
+    &copy; 2025 OS ZERO. All rights reserved.
+  </footer>
+
+  <!-- GSAP Animations -->
+  <script>
+    gsap.from("#hero h1", { opacity: 0, y: 20, duration: 1 });
+    gsap.from("#hero p", { opacity: 0, y: 20, duration: 1, delay: 0.3 });
+    gsap.from("#hero a", { opacity: 0, y: 20, duration: 1, delay: 0.6 });
+  </script>
+</body>
+</html>
